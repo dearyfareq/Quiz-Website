@@ -6,6 +6,7 @@
     width: 60%;
     margin-bottom: 1.2rem;
     transition: all 250ms ease-in-out;
+    cursor: pointer;
 }
 .choice-container:hover{
     transform: scale(1.1);
@@ -22,4 +23,10 @@
 a{
     text-decoration: none;
     font-size: 2rem;
+}
+.correct{
+    background: #72ff98;
+}
+.incorrect{
+    background: crimson;
 }
