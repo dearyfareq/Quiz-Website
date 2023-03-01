@@ -1,5 +1,6 @@
-const question = document.getElementById("question")
-const choice = Array.from(document.getElementsByClassName("choice-text"))
+const question = document.getElementById("question");
+const choice = Array.from(document.getElementsByClassName("choice-text"));
+const reset = document.getElementById("reset");
 
 let currentQ = {};
 let acceptingA = false;
@@ -7,7 +8,31 @@ let score = 0;
 let qCounter = 0;
 let availableQuestions = [];
 
-let questions = []
+let questions = [ {
+    question: 'Inside which HTML element do we put the JavaScript??',
+    choice1: '<script>',
+    choice2: '<javascript>',
+    choice3: '<js>',
+    choice4: '<scripting>',
+    answer: 1,
+},
+{
+    question:
+        "What is the correct syntax for referring to an external script called 'xxx.js'?",
+    choice1: "<script href='xxx.js'>",
+    choice2: "<script name='xxx.js'>",
+    choice3: "<script src='xxx.js'>",
+    choice4: "<script file='xxx.js'>",
+    answer: 3,
+},
+{
+    question: " How do you write 'Hello World' in an alert box?",
+    choice1: "msgBox('Hello World');",
+    choice2: "alertBox('Hello World');",
+    choice3: "msg('Hello World');",
+    choice4: "alert('Hello World');",
+    answer: 4,
+},]
 
 const currectAnwser = 5;
 const maxQuestions = 10;
@@ -25,28 +50,38 @@ getNewQuestion = () => {
     };
 
     qCounter += 1;
-    const qIndex = Math.floor(Math.random() = availableQuestions.length);
+    const qIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQ = availableQuestions[qIndex];
-    question.innerHTML = currentQ.question;
+    question.innerText = currentQ.question;
 
-    choice.forEach(choice => {
-        const number = choice.dataset("number");
-        choice.innerHTML = currentQ["choice" + number]
+    choice.forEach((choice) => {
+        const number = choice.dataset["number"];
+        choice.innerText = currentQ['choice' + number]
     });
 
     availableQuestions.splice(qIndex, 1);
-    acceptingA = true;
+    acceptingA = false;
 };
 
-choice.forEach(choice => {
-    choice.addEventListener('click', e => {
+choice.forEach((choice) => {
+    choice.addEventListener('click',(e) => {
+        console.log("hi!")
         if (acceptingA) return;
+        console.log("hi!!")
         acceptingA = false;
         const selectedChoice = e.target;
-        const selectedAnwser = selectedChoice.dataset('number');
-        console.log(selectedAnwser);
-        getNewQuestion();
+        const selectedAnwser = selectedChoice.dataset['number'];
+        let classToApply = "incorrect"
+        if(selectedAnwser == currentQ.answer){ classToApply = "correct"}
+        selectedChoice.parentElement.classList.add(classToApply)
+        setTimeout(() => {
+            selectedChoice.parentElement.classList.remove(classToApply);
+            getNewQuestion();
+        },1000);
+        
     });
 });
+
+reset.addEventListener('click', startGame())
 
 startGame();
