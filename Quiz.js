@@ -1,6 +1,8 @@
 const question = document.getElementById("question");
 const choice = Array.from(document.getElementsByClassName("choice-text"));
 const reset = document.getElementById("reset");
+const score_tracker = document.getElementById("score_tracker");
+const question_tracker = document.getElementById("question_tracker");
 
 let currentQ = {};
 let acceptingA = false;
@@ -50,6 +52,8 @@ getNewQuestion = () => {
     };
 
     qCounter += 1;
+    question_tracker.innerText = `${qCounter}/${maxQuestions}`
+    
     const qIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQ = availableQuestions[qIndex];
     question.innerText = currentQ.question;
@@ -72,7 +76,11 @@ choice.forEach((choice) => {
         const selectedChoice = e.target;
         const selectedAnwser = selectedChoice.dataset['number'];
         let classToApply = "incorrect"
-        if(selectedAnwser == currentQ.answer){ classToApply = "correct"}
+        if(selectedAnwser == currentQ.answer){ 
+            classToApply = "correct"
+            score += currectAnwser;
+            score_tracker.innerText = `Score = ${score}`;
+        }
         selectedChoice.parentElement.classList.add(classToApply)
         setTimeout(() => {
             selectedChoice.parentElement.classList.remove(classToApply);
