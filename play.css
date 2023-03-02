@@ -33,6 +33,13 @@ a{
 .score_questions{
     display: flex;
     justify-content: space-between;
-    width: 30%;
+    width: 800px;
+
+}
+#score_tracker{
+    font-size: 3rem;
+}
+#question_tracker{
+    font-size: 3rem;
 
 }

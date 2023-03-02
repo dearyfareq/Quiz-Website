@@ -52,7 +52,7 @@ getNewQuestion = () => {
     };
 
     qCounter += 1;
-    question_tracker.innerText = `${qCounter}/${maxQuestions}`
+    question_tracker.innerText = `question ${qCounter}/${maxQuestions}`
     
     const qIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQ = availableQuestions[qIndex];
@@ -79,7 +79,7 @@ choice.forEach((choice) => {
         if(selectedAnwser == currentQ.answer){ 
             classToApply = "correct"
             score += currectAnwser;
-            score_tracker.innerText = `Score = ${score}`;
+            score_tracker.innerText = `Score : ${score}`;
         }
         selectedChoice.parentElement.classList.add(classToApply)
         setTimeout(() => {
