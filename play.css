@@ -30,3 +30,9 @@ a{
 .incorrect{
     background: crimson;
 }
+.score_questions{
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+
+}
