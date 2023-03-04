@@ -1,15 +1,19 @@
+/* target different elements and make array from buttons */
 const question = document.getElementById("question");
 const choice = Array.from(document.getElementsByClassName("choice-text"));
+
 const reset = document.getElementById("reset");
 const score_tracker = document.getElementById("score_tracker");
 const question_tracker = document.getElementById("question_tracker");
 
+/* added variables for game functionality */
 let currentQ = {};
 let acceptingA = false;
 let score = 0;
 let qCounter = 0;
 let availableQuestions = [];
 
+/* temp. hardCoded questions */
 let questions = [
   {
     question: "Inside which HTML element do we put the JavaScript??",
@@ -38,9 +42,11 @@ let questions = [
   },
 ];
 
+/* points for each right anwser and max number of questions */
 const currectAnwser = 5;
 const maxQuestions = 3;
 
+/* game start function, set everything to zero and spread the questions into another array(extra steps?) */
 startGame = () => {
   qCounter = 0;
   score = 0;
@@ -48,11 +54,14 @@ startGame = () => {
   getNewQuestion();
 };
 
+/* main function, every time we click, let it play */
 getNewQuestion = () => {
+  /* at start, check for game end conditions */
   if (availableQuestions === 0 || maxQuestions <= qCounter) {
     return window.location.assign("./end.html");
   }
 
+  /* raise  counter and get a random question from the question array */
   qCounter += 1;
   question_tracker.innerText = `question ${qCounter}/${maxQuestions}`;
 
@@ -60,21 +69,26 @@ getNewQuestion = () => {
   currentQ = availableQuestions[qIndex];
   question.innerText = currentQ.question;
 
+  /* display questions */
   choice.forEach((choice) => {
     const number = choice.dataset["number"];
     choice.innerText = currentQ["choice" + number];
   });
-
+  /* remove used question from the list, ues the index that was used to bring the same question */
   availableQuestions.splice(qIndex, 1);
   acceptingA = false;
 };
 
+/* main event litener, for meach of the buttons */
 choice.forEach((choice) => {
   choice.addEventListener("click", (e) => {
     console.log("hi!");
+
     if (acceptingA) return;
-    console.log("hi!!");
+    //console.log("hi!!");
     acceptingA = false;
+
+    //check for anwser, if right, apply a styling for 1sec, then switch to next question
     const selectedChoice = e.target;
     const selectedAnwser = selectedChoice.dataset["number"];
     let classToApply = "incorrect";
@@ -92,6 +106,8 @@ choice.forEach((choice) => {
   });
 });
 
+//the go back button allows us to go back and reset the game
 reset.addEventListener("click", startGame());
 
+//initial start
 startGame();
